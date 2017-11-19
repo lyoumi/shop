@@ -1,0 +1,11 @@
+@RequestMapping(value = "add", method = RequestMethod.GET)
+    public String loadAddingPage(Model model){
+        model.addAttribute("bookProduct", new Book("", 0, null, null, "", 0));
+        return "bookstore-add";
+    }
+
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public String addBook(Model model, Book book){
+        bookStoreService.insertBook(book);
+        return "bookstore-add";
+    }
