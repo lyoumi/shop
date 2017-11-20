@@ -48,7 +48,7 @@
         <div class="header clearfix">
             <nav>
                 <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="bookstore-menu.jsp">Home</a></li>
+                    <li role="presentation" class="active"><a href="/books/menu">Home</a></li>
                     <li role="presentation"><a href="#">About</a></li>
                     <li role="presentation"><a href="#">Contact</a></li>
                 </ul>

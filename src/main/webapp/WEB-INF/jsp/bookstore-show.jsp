@@ -82,7 +82,8 @@
             <div class="form-group">
                 <input type="text" placeholder="Fantasy, Comedy, Drama, Horror Fiction, Literary realism, Romance, Tragedy, Tragicomedy, Manga, Scientific, Programing" name="bookGenre" id="bookGenre" class="form-control">
             </div>
-            <input type = "submit" name = "submitButton" id="submitButton" value = "Show" />
+            <%--<input type = "submit" name = "submitButton" id="submitButton" value = "Show" />--%>
+            <button class="btn btn-lg btn-success" role="button" type="submit" name="submitButton" id="submitButton">Show</button>
         </div>
     </div>
 
