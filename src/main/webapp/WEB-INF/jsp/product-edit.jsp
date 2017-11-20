@@ -45,7 +45,7 @@
 
 <body>
 
-<form action="<c:url value="books" />" method="POST">
+<form action="<c:url value="{id}" />" method="POST">
 
     <div class="container">
         <div class="header clearfix">

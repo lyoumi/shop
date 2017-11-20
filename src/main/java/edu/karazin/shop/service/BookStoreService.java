@@ -6,6 +6,7 @@ import edu.karazin.shop.model.Genre;
 import edu.karazin.shop.dao.hibernate.HibernateAuthorDataAccessObject;
 import edu.karazin.shop.dao.hibernate.HibernateBookDataAccessObject;
 import edu.karazin.shop.dao.hibernate.HibernateGenreDataAccessObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,14 +18,15 @@ public class BookStoreService {
 
     private static BookStoreService bookStoreService;
 
-    private HibernateAuthorDataAccessObject hibernateAuthorDataAccessObject = HibernateAuthorDataAccessObject.getHibernateAuthorDataAccessObject();
-    private HibernateGenreDataAccessObject hibernateGenreDataAccessObject = HibernateGenreDataAccessObject.getHibernateGenreDataAccessObject();
-    private HibernateBookDataAccessObject hibernateBookDataAccessObject = HibernateBookDataAccessObject.getHibernateBookDataAccessObject();
+    @Autowired
+    private HibernateAuthorDataAccessObject hibernateAuthorDataAccessObject;
 
-    public static BookStoreService getBookStoreService(){
-        if (Objects.equals(bookStoreService, null)) bookStoreService = new BookStoreService();
-        return bookStoreService;
-    }
+    @Autowired
+    private HibernateGenreDataAccessObject hibernateGenreDataAccessObject;
+
+    @Autowired
+    private HibernateBookDataAccessObject hibernateBookDataAccessObject;
+
 
     public Author insertAuthor(Author author){
         Author currentAuthor = hibernateAuthorDataAccessObject.getAuthorByName(author.getName());

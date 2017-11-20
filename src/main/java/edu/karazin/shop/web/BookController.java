@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,7 +164,7 @@ public class BookController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "{id}")
-    public String updateBook(Model model, Book book){
+    public String updateBook(Book book, @Valid Model model){
         bookStoreService.updateBook(book);
         return "redirect:/books/show";
     }

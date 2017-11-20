@@ -8,10 +8,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import edu.karazin.shop.util.SessionFactoryImpl;
+import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
 
-
+@Repository
 public class HibernateOrderDataAccessObject implements OrderDataAccessObject {
 
     private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
