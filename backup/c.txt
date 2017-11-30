@@ -5,7 +5,7 @@
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String addBook(Model model, Book book){
-        bookStoreService.insertBook(book);
+    public String addBook(Model model, Book bookList){
+        bookStoreService.insertBook(bookList);
         return "bookstore-add";
     }

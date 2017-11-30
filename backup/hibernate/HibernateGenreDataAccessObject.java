@@ -5,21 +5,18 @@ import edu.karazin.shop.dao.GenreDataAccessObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import edu.karazin.shop.util.SessionFactoryImpl;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Objects;
 
-@Repository
-public class HibernateGenreDataAccessObject implements GenreDataAccessObject {
+//@Repository
+public class HibernateGenreDataAccessObject{
 
-    private static  HibernateGenreDataAccessObject hibernateGenreDataAccessObject;
-    private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
+    /*private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
 
-    public static HibernateGenreDataAccessObject getHibernateGenreDataAccessObject(){
-        if (Objects.equals(hibernateGenreDataAccessObject, null)) hibernateGenreDataAccessObject = new HibernateGenreDataAccessObject();
-        return hibernateGenreDataAccessObject;
+    public HibernateGenreDataAccessObject() {
     }
 
     @Override
@@ -68,4 +65,18 @@ public class HibernateGenreDataAccessObject implements GenreDataAccessObject {
             session.close();
         }
     }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            String hql = "from Genre g";
+            Query query = session.createQuery(hql);
+            return query.getResultList();
+        } finally {
+            transaction.commit();
+            session.close();
+        }
+    }*/
 }

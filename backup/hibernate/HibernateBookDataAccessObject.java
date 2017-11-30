@@ -1,34 +1,14 @@
 package edu.karazin.shop.dao.hibernate;
 
-import edu.karazin.shop.model.Book;
-import edu.karazin.shop.dao.BookDataAccessObject;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import edu.karazin.shop.util.SessionFactoryImpl;
-import org.springframework.stereotype.Repository;
+//@Repository
+public class HibernateBookDataAccessObject{
 
-import java.util.List;
+    /*private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
 
-@Repository
-public class HibernateBookDataAccessObject implements BookDataAccessObject {
-
-    private static HibernateBookDataAccessObject hibernateBookDataAccessObject;
-    private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
-
-    private HibernateBookDataAccessObject(){}
-
-    public static HibernateBookDataAccessObject getHibernateBookDataAccessObject() {
-        if (hibernateBookDataAccessObject != null) return hibernateBookDataAccessObject;
-        else {
-            hibernateBookDataAccessObject = new HibernateBookDataAccessObject();
-            return hibernateBookDataAccessObject;
-        }
-    }
+    public HibernateBookDataAccessObject(){}
 
     @Override
-    public boolean addNewBook(Book book) {
+    public boolean addNewBook(BookList book) {
         Session session = null;
         try {
             session = SessionFactoryImpl.getSessionFactory().openSession();
@@ -45,14 +25,14 @@ public class HibernateBookDataAccessObject implements BookDataAccessObject {
     }
 
     @Override
-    public Book getBookById(long id) {
+    public BookList getBookById(long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            Query query = session.createQuery("select b from Book b where b.id = :id");
+            Query query = session.createQuery("select b from BookList b where b.id = :id");
             query.setParameter("id", id);
             transaction.commit();
-            return (Book) query.uniqueResult();
+            return (BookList) query.uniqueResult();
         } catch (Exception e){
             return null;
         } finally {
@@ -62,7 +42,7 @@ public class HibernateBookDataAccessObject implements BookDataAccessObject {
 
     @Override
     public boolean removeById(long id) {
-        Book book = getBookById(id);
+        BookList book = getBookById(id);
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -77,7 +57,7 @@ public class HibernateBookDataAccessObject implements BookDataAccessObject {
     }
 
     @Override
-    public boolean update(Book book) {
+    public boolean update(BookList book) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -92,11 +72,11 @@ public class HibernateBookDataAccessObject implements BookDataAccessObject {
     }
 
     @Override
-    public List<Book> getAllBooks() {
+    public List<BookList> getAllBooks() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            String hql = "from Book b";
+            String hql = "from BookList b";
             Query query = session.createQuery(hql);
             return query.getResultList();
         } finally {
@@ -107,14 +87,14 @@ public class HibernateBookDataAccessObject implements BookDataAccessObject {
     }
 
     @Override
-    public Book getBookByName(String name){
+    public BookList getBookByName(String name){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String hql = "from Book b where b.name = '" + name + "'";
+            String hql = "from BookList b where b.name = '" + name + "'";
             Query query = session.createQuery(hql);
-            Book book = (Book) query.uniqueResult();
+            BookList book = (BookList) query.uniqueResult();
             session.getTransaction().commit();
             return book;
         }
-    }
+    }*/
 }

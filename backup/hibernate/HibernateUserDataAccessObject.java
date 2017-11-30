@@ -5,19 +5,18 @@ import edu.karazin.shop.dao.UsersDataAccessObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import edu.karazin.shop.util.SessionFactoryImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
 
-@Repository
-public class HibernateUserDataAccessObject implements UsersDataAccessObject {
+//@Repository
+public class HibernateUserDataAccessObject{
 
-    private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
+/*    private SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();
 
-    private HibernateUserDataAccessObject(){}
+    public HibernateUserDataAccessObject(){}
 
     @Override
     public boolean getUser(String login, String password) {
@@ -73,5 +72,5 @@ public class HibernateUserDataAccessObject implements UsersDataAccessObject {
         } finally {
             session.close();
         }
-    }
+    }*/
 }
