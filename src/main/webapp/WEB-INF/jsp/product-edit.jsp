@@ -11,6 +11,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +54,8 @@
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation" class="active"><a href="/books/menu">Home</a></li>
                     <li role="presentation"><a href="/order">Basket</a></li>
-                    <li role="presentation"><a href="#">Contact</a></li>
+                    <li role="presentation"><a href="/profile">Profile</a></li>
+                    <li role="presentation"><a href="/profile">Logout</a></li>
                 </ul>
             </nav>
             <h3 class="text-muted">Books</h3>
@@ -64,6 +66,7 @@
         <div class="jumbotron">
 
             <form:form modelAttribute="product">
+                <sec:csrfInput/>
                 <fieldset>
                     <form:input path="id" cssClass="form-control" readonly="true"/>
                     <br/>

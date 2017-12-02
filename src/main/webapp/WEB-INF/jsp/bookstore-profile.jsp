@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: pikachu
-  Date: 10/20/17
-  Time: 7:51 PM
+  Date: 10/23/17
+  Time: 8:10 AM
   To change this template use File | Settings | File Templates.
 --%>
 
@@ -16,8 +16,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <%--<link rel="icon" href="../../favicon.ico">--%>
 
     <title>Books</title>
 
@@ -31,7 +33,8 @@
     <link href="/jumbotron-narrow.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -43,7 +46,7 @@
 
 <body>
 
-<form   action="<c:url value="add" />" method="POST">
+<form action="<c:url value="{id}" />" method="POST">
 
     <div class="container">
         <div class="header clearfix">
@@ -60,37 +63,25 @@
 
 
 
-
         <div class="jumbotron">
 
-            <form:form modelAttribute="product">
+            <form:form modelAttribute="user">
+                <sec:csrfInput/>
                 <fieldset>
+                    <form:input path="id" cssClass="form-control" style="display:hidden;" readonly="true"/>
+                    <br/>
 
-                    <sec:csrfInput/>
-
-                    <form:input path="name"  placeholder="Book name" cssClass="form-control"/>
+                    <form:input path="username" cssClass="form-control" readonly="true"/>
                     <br />
 
-                    <form:input path="pages" placeholder="Pages" cssClass="form-control"/>
+                    <form:input path="password" cssClass="form-control" readonly="true"/>
                     <br />
+                    <form:input path="roles" cssClass="form-control" readonly="true"/>
 
-                    <form:input name="authors" path="authors" placeholder="Authors" cssClass="form-control"/>
-                    <br />
-
-                    <form:input name="genres" path="genres" placeholder="Genres" cssClass="form-control"/>
-                    <br />
-
-                    <form:input path="publisher" placeholder="Publisher" cssClass="form-control"/>
-                    <br />
-
-                    <form:input path="price" placeholder="Price" cssClass="form-control"/>
-                    <br />
                 </fieldset>
-
-                <button class="btn btn-lg btn-success" role="button" type="submit">Add</button>
+                <p><a class="btn btn-lg btn-success" role="button" type="submit" href="/order/story">Orders story</a></p>
             </form:form>
         </div>
-
 
 
     </div> <!-- /container -->

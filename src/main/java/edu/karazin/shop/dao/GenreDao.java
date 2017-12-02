@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface GenreDataAccessObject extends CrudRepository<Genre, Integer> {
+public interface GenreDao extends CrudRepository<Genre, Integer> {
     Genre getGenreByGenrename(String genrename);
 }

@@ -11,6 +11,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -52,7 +53,8 @@
             <ul class="nav nav-pills pull-right">
                 <li role="presentation" class="active"><a href="/books/menu">Home</a></li>
                 <li role="presentation"><a href="/order">Basket</a></li>
-                <li role="presentation"><a href="#">Contact</a></li>
+                <li role="presentation"><a href="/profile">Profile</a></li>
+                <li role="presentation"><a href="/logout">Logout</a></li>
             </ul>
         </nav>
         <h3 class="text-muted">Books</h3>
@@ -89,29 +91,32 @@
             <p id="result1"></p>
         </div>
     </div>
+    <sec:csrfInput/>
 
-    <c:forEach items="${products}" var="prod">
+    <c:forEach items="${products}" var="user">
         <div class="jumbotron">
             <h1>
-                    ${prod.name}
+                    ${user.name}
             </h1>
-            <p class=\"lead\">Id: ${prod.id} </p>
-            <p>Pages: ${prod.pages}</p>
-            <p>Publisher: ${prod.publisher}</p>
-            <p>Price: ${prod.price}</p>
+            <p class=\"lead\">Id: ${user.id} </p>
+            <p>Pages: ${user.pages}</p>
+            <p>Publisher: ${user.publisher}</p>
+            <p>Price: ${user.price}</p>
             <p>Authors:
-                <c:forEach items="${prod.authors}" var="author">
+                <c:forEach items="${user.authors}" var="author">
                     ${author.name},
                 </c:forEach>
             </p>
             <p>Genres:
-                <c:forEach items="${prod.genres}" var="genre">
+                <c:forEach items="${user.genres}" var="genre">
                     ${genre.genrename},
                 </c:forEach>
             </p>
-            <p><a class="btn btn-lg btn-success" role="button" href="/books/${prod.id}" type="submit">Edit</a></p>
-            <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${prod.id}" type="submit">Remove</a></p>
-            <p><a class="btn btn-lg btn-success" role="button" href="/order/${prod.id}" type="submit">Add to bucket</a></p>
+            <sec:authorize access="hasRole('ADMIN')">
+                <p><a class="btn btn-lg btn-success" role="button" href="/books/${user.id}" type="submit">Edit</a></p>
+                <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${user.id}" type="submit">Remove</a></p>
+            </sec:authorize>
+            <p><a class="btn btn-lg btn-success" role="button" href="/order/${user.id}" type="submit">Add to bucket</a></p>
         </div>
     </c:forEach>
 

@@ -1,26 +1,30 @@
 package edu.karazin.shop.model;
 
-import org.springframework.context.annotation.Scope;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
 @Component
-//@Scope("session")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Integer id;
+    private Integer id;
 
     @Column(name = "username")
-    String username;
+    private String username;
 
     @Column(name = "password")
-    String password;
+    private String password;
+
+    @Column(name = "role")
+    private String role;
 
     public Integer getId() {
         return id;
@@ -44,6 +48,14 @@ public class User {
 
     public void setPassword(String upassword) {
         this.password = upassword;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

@@ -15,8 +15,6 @@ public interface BookStoreService {
 
     List<BookList> getBookListByGenre(String genre);
 
-    List<BookList> getAllBooks();
-
     BookList getBookById(Long id);
 
     void updateBook(BookList bookList);

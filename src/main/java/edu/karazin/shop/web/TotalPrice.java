@@ -2,19 +2,19 @@ package edu.karazin.shop.web;
 
 public class TotalPrice {
 
-    private Integer price;
+    private Double price;
 
     public TotalPrice(){}
 
-    public TotalPrice(Integer price) {
+    public TotalPrice(Double price) {
         this.price = price;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

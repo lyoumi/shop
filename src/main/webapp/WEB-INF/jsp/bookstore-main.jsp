@@ -10,6 +10,7 @@ To change this template use File | Settings | File Templates.
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -58,6 +59,7 @@ To change this template use File | Settings | File Templates.
 
     <div class="jumbotron">
         <h1>Books</h1>
+        <sec:csrfInput/>
         <p><a class="btn btn-lg btn-success" href="login" role="button" type="submit" name="login">Sign in now</a></p>
     </div>
 

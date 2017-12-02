@@ -1,11 +1,12 @@
 package edu.karazin.shop.service.impl;
 
-import edu.karazin.shop.dao.AuthorDataAccessObject;
-import edu.karazin.shop.dao.BookDataAccessObject;
-import edu.karazin.shop.dao.GenreDataAccessObject;
+import edu.karazin.shop.dao.AuthorDao;
+import edu.karazin.shop.dao.BookDao;
+import edu.karazin.shop.dao.GenreDao;
 import edu.karazin.shop.model.Author;
 import edu.karazin.shop.model.BookList;
 import edu.karazin.shop.model.Genre;
+import edu.karazin.shop.model.Genres;
 import edu.karazin.shop.service.BookStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +19,19 @@ import java.util.Objects;
 public class BookStoreServiceImpl implements BookStoreService {
 
     @Autowired
-    private AuthorDataAccessObject authorDataAccessObject;
+    private AuthorDao authorDao;
 
     @Autowired
-    private GenreDataAccessObject genreDataAccessObject;
+    private GenreDao genreDao;
 
     @Autowired
-    private BookDataAccessObject bookDataAccessObject;
+    private BookDao bookDao;
 
     @Override
     public Author insertAuthor(Author author) {
-        Author currentAuthor = authorDataAccessObject.getAuthorByName(author.getName());
+        Author currentAuthor = authorDao.getAuthorByName(author.getName());
         if (Objects.equals(currentAuthor, null)) {
-            author = authorDataAccessObject.save(author);
+            author = authorDao.save(author);
             return author;
         } else return currentAuthor;
 
@@ -38,53 +39,63 @@ public class BookStoreServiceImpl implements BookStoreService {
 
     @Override
     public Genre insertGenre(Genre genre) {
-        Genre currentGenre = genreDataAccessObject.getGenreByGenrename(genre.getGenrename());
+        Genre currentGenre = genreDao.getGenreByGenrename(genre.getGenrename());
         if (Objects.equals(currentGenre, null)) {
-            genre = genreDataAccessObject.save(genre);
+            genre = genreDao.save(genre);
             return genre;
         } else return currentGenre;
     }
 
     @Override
     public void insertBook(BookList bookList) {
-        bookDataAccessObject.save(bookList);
+        bookDao.save(bookList);
     }
 
     @Override
     public List<BookList> getBookListByGenre(String genre) {
         if (genre != null){
-            if (!Objects.equals(genre, "")) return genreDataAccessObject.getGenreByGenrename(genre).getBookLists();
-            else return (List<BookList>) bookDataAccessObject.findAll();
+            if (!Objects.equals(genre, "")) return genreDao.getGenreByGenrename(genre).getBookLists();
+            else return (List<BookList>) bookDao.findAll();
         }
-        else return (List<BookList>) bookDataAccessObject.findAll();
-    }
-
-    @Override
-    public List<BookList> getAllBooks() {
-        return (List<BookList>) bookDataAccessObject.findAll();
+        else return (List<BookList>) bookDao.findAll();
     }
 
     @Override
     public BookList getBookById(Long id) {
-        return bookDataAccessObject.findOne(id);
+        return bookDao.findOne(id);
     }
 
     @Override
     public void updateBook(BookList bookList) {
-        bookDataAccessObject.save(bookList);
+        bookDao.save(bookList);
     }
 
     @Override
-    public void deleteBook(Long id) { bookDataAccessObject.delete(id);}
+    public void deleteBook(Long id) { bookDao.delete(id);}
 
     @Override
     public List<String> getGenreNames(String genreName){
-        List<Genre> genreList = (List<Genre>) genreDataAccessObject.findAll();
+        List<Genre> genreList = (List<Genre>) genreDao.findAll();
+        createGenresIfItNotExist(genreList);
         List<String> genres = new ArrayList<>();
         for (Genre genre :
              genreList) {
             if (genre.getGenrename().toLowerCase().contains(genreName.toLowerCase())) genres.add(genre.getGenrename());
         }
         return genres;
+    }
+
+    private void createGenresIfItNotExist(List<Genre> genreList){
+        if (Objects.equals(genreList, null) || genreList.isEmpty()) {
+            Genres[] genreArray = Genres.values();
+            for (Genres name :
+                    genreArray) {
+                Genre genre = new Genre();
+                if (name.toString().contains("_")) genre.setGenrename(name.toString().replace("_", " "));
+                else genre.setGenrename(name.toString());
+                genreList.add(genre);
+                genreDao.save(genre);
+            }
+        }
     }
 }

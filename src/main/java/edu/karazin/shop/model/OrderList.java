@@ -18,9 +18,9 @@ public class OrderList {
     private int userId;
 
     @Column(name = "total_price")
-    private Integer totalPrice;
+    private Double totalPrice;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.DETACH)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "book_order",
             joinColumns = {
@@ -30,8 +30,8 @@ public class OrderList {
             })
     private List<BookList> bookLists;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "order_order_details",
             joinColumns = {
                     @JoinColumn(name = "order_id")
@@ -72,11 +72,11 @@ public class OrderList {
         this.orderDetails = orderDetails;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

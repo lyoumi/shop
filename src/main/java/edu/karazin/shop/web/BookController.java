@@ -5,8 +5,8 @@ import edu.karazin.shop.model.BookList;
 import edu.karazin.shop.model.Genre;
 import edu.karazin.shop.service.BookStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "books")
-//@Scope(value = "session", proxyMode = ScopedProxyMode.DEFAULT)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BookController {
 
     @Autowired
@@ -35,6 +35,7 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET, path = "show")
     public String loadBookList(Model model, @RequestParam(value = "searchText", required = false) String genre){
+
         model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(genre));
         model.addAttribute("searchForm", new BookSearchForm(genre));
         return "bookstore-show";
@@ -48,6 +49,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String loadBook(Model model, @PathVariable("id") Long bookId){
         BookList bookList = bookStoreServiceImpl.getBookById(bookId);
         model.addAttribute("product", bookList);
@@ -55,6 +57,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateBook(BookList bookList,
                              BindingResult bindingResult,
                              @ModelAttribute(value="authors") String authorsForm,
@@ -89,6 +92,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String loadPageForCreating(Model model){
         BookList bookList = new BookList();
         model.addAttribute("product", bookList);
@@ -96,6 +100,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.POST,  path = "add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addBook(BookList bookList,
                           BindingResult bindingResult,
                           @ModelAttribute(value="authors")String authorsForm,
@@ -130,6 +135,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "remove/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBook(@PathVariable("id") Long id){
         bookStoreServiceImpl.deleteBook(id);
         return "redirect:/books/show";
