@@ -47,14 +47,7 @@ To change this template use File | Settings | File Templates.
 <form>
 <div class="container">
     <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">Bucket</a></li>
-                <li role="presentation"><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">Books</h3>
+        <h3 class="text-muted">BookStore</h3>
     </div>
 
     <div class="jumbotron">

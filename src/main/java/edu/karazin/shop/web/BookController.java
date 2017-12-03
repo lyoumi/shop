@@ -35,7 +35,6 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET, path = "show")
     public String loadBookList(Model model, @RequestParam(value = "searchText", required = false) String genre){
-
         model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(genre));
         model.addAttribute("searchForm", new BookSearchForm(genre));
         return "bookstore-show";

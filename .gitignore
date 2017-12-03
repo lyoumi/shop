@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+shop-master\.zip
+
+BookStore_book_genre\.sql
+
+dump\.sql
