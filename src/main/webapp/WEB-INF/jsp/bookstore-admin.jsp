@@ -67,16 +67,16 @@
 
     <sec:csrfInput/>
 
-    <c:forEach items="${users}" var="user">
+    <c:forEach items="${users}" var="order">
         <div class="jumbotron">
             <h1>
-                Name: ${user.username}
+                Name: ${order.username}
             </h1>
             <p>Role:
-                ${user.role}
+                ${order.role}
             </p>
-            <p><a class="btn btn-lg btn-success" role="button" href="/admin/${user.id}" type="submit">Edit</a></p>
-            <p><a class="btn btn-lg btn-success" role="button" href="/admin/delete/${user.id}" type="submit">Delete</a></p>
+            <p><a class="btn btn-lg btn-success" role="button" href="/admin/${order.id}" type="submit">Edit</a></p>
+            <p><a class="btn btn-lg btn-success" role="button" href="/admin/delete/${order.id}" type="submit">Delete</a></p>
         </div>
     </c:forEach>
 

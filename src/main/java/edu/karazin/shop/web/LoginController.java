@@ -19,7 +19,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @GetMapping(path = "login")
     public String loadLogin(Model model) {
         model.addAttribute("userData", new User());
         return "bookstore-login";
@@ -31,9 +31,9 @@ public class LoginController {
         return "bookstore-signup";
     }
 
-    @PostMapping
+    @PostMapping(path = "signup")
     public String signUpHandling(User user){
-        userService.createUser(user);
-        return "redirect:/login";
+        if(userService.createUser(user)) return "redirect:/login";
+        else return "redirect:/signup";
     }
 }

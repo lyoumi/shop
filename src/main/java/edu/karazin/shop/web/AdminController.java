@@ -1,6 +1,7 @@
 package edu.karazin.shop.web;
 
 import edu.karazin.shop.model.User;
+import edu.karazin.shop.service.BasketService;
 import edu.karazin.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BasketService basketService;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -46,5 +50,12 @@ public class AdminController {
     public String deleteUser(@PathVariable(name = "id") Integer id){
         userService.deleteUser(id);
         return "redirect:/admin";
+    }
+
+    @GetMapping(path = "orders")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String getAllOrders(Model model){
+        model.addAttribute("orders", basketService.getAllOrders());
+        return "bookstore-admin-orders";
     }
 }

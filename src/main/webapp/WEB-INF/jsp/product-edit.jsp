@@ -73,7 +73,7 @@
             <form:form modelAttribute="product">
                 <sec:csrfInput/>
                 <fieldset>
-                    <form:input path="id" cssClass="form-control" readonly="true"/>
+                    <form:input path="id" cssClass="form-control" cssStyle="display: none" readonly="true"/>
                     <br/>
 
                     <form:input path="name" cssClass="form-control"/>

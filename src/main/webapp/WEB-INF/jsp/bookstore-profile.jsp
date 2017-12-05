@@ -73,18 +73,21 @@
             <form:form modelAttribute="user">
                 <sec:csrfInput/>
                 <fieldset>
-                    <form:input path="id" cssClass="form-control" style="display:hidden;" readonly="true"/>
+                    <form:input path="id" cssClass="form-control" cssStyle="display:none" readonly="true"/>
                     <br/>
 
                     <form:input path="username" cssClass="form-control" readonly="true"/>
                     <br />
 
-                    <form:input path="password" cssClass="form-control" readonly="true"/>
+                    <form:input path="password" cssClass="form-control" cssStyle="display:none" readonly="true"/>
                     <br />
-                    <form:input path="roles" cssClass="form-control" readonly="true"/>
+                    <form:input path="role" cssClass="form-control" readonly="true"/>
 
                 </fieldset>
                 <p><a class="btn btn-lg btn-success" role="button" type="submit" href="/order/story">Orders story</a></p>
+                <sec:authorize access="hasRole('ADMIN')">
+                <p><a class="btn btn-lg btn-success" role="button" type="submit" href="/order/story">All orders story</a></p>
+                </sec:authorize>
             </form:form>
         </div>
 

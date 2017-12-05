@@ -48,6 +48,7 @@
 <body>
 
 <div class="container">
+    <sec:csrfInput/>
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills pull-right">
@@ -65,62 +66,13 @@
         <h3 class="text-muted">Books</h3>
     </div>
 
-
-
-    <div class="jumbotron">
-        <div class="form-group">
-
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('#searchText').keyup(function () {
-                        var genre = $('#searchText').val();
-                        console.log(genre);
-                        $.ajax({
-                            type: 'GET',
-                            data: {genre: genre},
-                            url: 'showhints',
-                            success: function (result) {
-                                $('#result1').html(result);
-                                document.getElementById('result1').innerHTML = result;
-                            }
-                        })
-                    })
-                })
-            </script>
-
-            <form:form modelAttribute="searchForm">
-                <form:input path="searchText" name="searchText" id="searchText" placeholder="Comedy, Tragicomedy, Satire, Horror Fiction, Fantasy, Drama, Mythology, Romance, Manga, Programming,  Scientific, Literary realism" cssClass="form-control"/>
-                <input type="submit" value="Search" class="btn btn-lg btn-success"/>
-            </form:form>
-            <p id="result1"></p>
-        </div>
-    </div>
-    <sec:csrfInput/>
-
-    <c:forEach items="${products}" var="order">
+    <c:forEach items="${orders}" var="order">
         <div class="jumbotron">
             <h1>
-                    ${order.name}
+                Purchased by: ${order.name}
             </h1>
-            <p>Pages: ${order.pages}</p>
-            <p>Publisher: ${order.publisher}</p>
-            <p>Price: ${order.price}</p>
-            <p>Authors:
-                <c:forEach items="${order.authors}" var="author">
-                    ${author.name},
-                </c:forEach>
-            </p>
-            <p>Genres:
-                <c:forEach items="${order.genres}" var="genre">
-                    ${genre.genrename},
-                </c:forEach>
-            </p>
-            <sec:authorize access="hasRole('ADMIN')">
-                <p><a class="btn btn-lg btn-success" role="button" href="/books/${order.id}" type="submit">Edit</a></p>
-                <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${order.id}" type="submit">Remove</a></p>
-            </sec:authorize>
-            <p><a class="btn btn-lg btn-success" role="button" href="/order/${order.id}" type="submit">Add to bucket</a></p>
+            <p class=\"lead\"> </p>
+            <p>Description: ${order.description}</p>
         </div>
     </c:forEach>
 

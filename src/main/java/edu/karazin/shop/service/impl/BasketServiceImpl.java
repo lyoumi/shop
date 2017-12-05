@@ -27,7 +27,7 @@ public class BasketServiceImpl implements BasketService {
     private UsersDao usersDao;
 
     @Autowired
-    private OrderStoryDao orderStoryDataAccessObject;
+    private OrderStoryDao orderStoryDao;
 
     @Override
     public OrderList createOrder(User user) {
@@ -120,12 +120,17 @@ public class BasketServiceImpl implements BasketService {
         }
         description += "Total: " + order.getTotalPrice() + ".";
         orderStory.setDescription(description);
-        orderStoryDataAccessObject.save(orderStory);
+        orderStoryDao.save(orderStory);
     }
 
     @Override
     public List<OrderStory> getOrderStory(String name){
-        return orderStoryDataAccessObject.findAllByName(name);
+        return orderStoryDao.findAllByName(name);
+    }
+
+    @Override
+    public List<OrderStory> getAllOrders() {
+        return (List<OrderStory>) orderStoryDao.findAll();
     }
 
 }

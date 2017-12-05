@@ -21,4 +21,6 @@ public interface BasketService {
     void addOrderToStory(OrderList order);
 
     List<OrderStory> getOrderStory(String name);
+
+    List<OrderStory> getAllOrders();
 }

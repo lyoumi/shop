@@ -31,7 +31,6 @@ public class OrderList {
     private List<BookList> bookLists;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "order_order_details",
             joinColumns = {
                     @JoinColumn(name = "order_id")

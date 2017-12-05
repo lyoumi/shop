@@ -67,27 +67,27 @@
         </div>
 
 
-        <c:forEach items="${products}" var="user">
+        <c:forEach items="${products}" var="order">
             <sec:csrfInput/>
             <div class="jumbotron">
                 <h1>
-                        ${user.name}
+                        ${order.name}
                 </h1>
-                <p class=\"lead\">Id: ${user.id} </p>
-                <p>Pages: ${user.pages}</p>
-                <p>Publisher: ${user.publisher}</p>
-                <p>Price: ${user.price}</p>
+                <p class=\"lead\">Id: ${order.id} </p>
+                <p>Pages: ${order.pages}</p>
+                <p>Publisher: ${order.publisher}</p>
+                <p>Price: ${order.price}</p>
                 <p>Authors:
-                    <c:forEach items="${user.authors}" var="author">
+                    <c:forEach items="${order.authors}" var="author">
                         ${author.name},
                     </c:forEach>
                 </p>
                 <p>Genres:
-                    <c:forEach items="${user.genres}" var="genre">
+                    <c:forEach items="${order.genres}" var="genre">
                         ${genre.genrename},
                     </c:forEach>
                 </p>
-                <p><a class="btn btn-lg btn-success" role="button" href="/order/remove/${user.id}"
+                <p><a class="btn btn-lg btn-success" role="button" href="/order/remove/${order.id}"
                       type="submit">Remove</a></p>
             </div>
         </c:forEach>

@@ -85,6 +85,18 @@ public class BookStoreServiceImpl implements BookStoreService {
         return genres;
     }
 
+    @Override
+    public List<String> getGenreNames() {
+        List<Genre> genreList = (List<Genre>) genreDao.findAll();
+        createGenresIfItNotExist(genreList);
+        List<String> genres = new ArrayList<>();
+        for (Genre genre :
+                genreList) {
+            genres.add(genre.getGenrename());
+        }
+        return genres;
+    }
+
     private void createGenresIfItNotExist(List<Genre> genreList){
         if (Objects.equals(genreList, null) || genreList.isEmpty()) {
             Genres[] genreArray = Genres.values();

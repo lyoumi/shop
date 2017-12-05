@@ -22,4 +22,6 @@ public interface BookStoreService {
     void deleteBook(Long id);
 
     List<String> getGenreNames(String genreName);
+
+    List<String> getGenreNames();
 }

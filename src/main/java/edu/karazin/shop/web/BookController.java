@@ -23,31 +23,33 @@ public class BookController {
     @Autowired
     private BookStoreService bookStoreServiceImpl;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String loadMain() {
         return "bookstore-main";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "menu")
+    @GetMapping(path = "menu")
     public String loadMenuPage() {
         return "bookstore-menu";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "show")
+    @GetMapping(path = "show")
     public String loadBookList(Model model, @RequestParam(value = "searchText", required = false) String genre){
         model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(genre));
         model.addAttribute("searchForm", new BookSearchForm(genre));
         return "bookstore-show";
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "show")
+    @PostMapping(path = "show")
     public String loadBookListByGenre(Model model, @ModelAttribute(value = "searchForm") BookSearchForm genre) {
-        model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(genre.getSearchText()));
+        if (bookStoreServiceImpl.getGenreNames().contains(genre.getSearchText())){
+            model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(genre.getSearchText()));
+        }
         return "bookstore-show";
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "{id}")
+    @GetMapping( path = "{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String loadBook(Model model, @PathVariable("id") Long bookId){
         BookList bookList = bookStoreServiceImpl.getBookById(bookId);
@@ -55,7 +57,7 @@ public class BookController {
         return "product-edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "{id}")
+    @PostMapping(path = "{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String updateBook(BookList bookList,
                              BindingResult bindingResult,
@@ -90,7 +92,7 @@ public class BookController {
         return "redirect:/books/show";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "add")
+    @GetMapping(path = "add")
     @PreAuthorize("hasRole('ADMIN')")
     public String loadPageForCreating(Model model){
         BookList bookList = new BookList();
@@ -98,7 +100,7 @@ public class BookController {
         return "bookstore-add";
     }
 
-    @RequestMapping(method = RequestMethod.POST,  path = "add")
+    @PostMapping(path = "add")
     @PreAuthorize("hasRole('ADMIN')")
     public String addBook(BookList bookList,
                           BindingResult bindingResult,
@@ -133,14 +135,14 @@ public class BookController {
         return "redirect:/books/show";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "remove/{id}")
+    @GetMapping(path = "remove/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String deleteBook(@PathVariable("id") Long id){
         bookStoreServiceImpl.deleteBook(id);
         return "redirect:/books/show";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "showhints")
+    @GetMapping(path = "showhints")
     @ResponseBody
     public List<String> showHints(@RequestParam(value = "genre")String genre){
         return bookStoreServiceImpl.getGenreNames(genre);

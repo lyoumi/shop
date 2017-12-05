@@ -66,13 +66,13 @@
         <h3 class="text-muted">Books</h3>
     </div>
 
-    <c:forEach items="${story}" var="user">
+    <c:forEach items="${story}" var="order">
         <div class="jumbotron">
             <h1>
-                Purchased by: ${user.name}
+                Purchased by: ${order.name}
             </h1>
             <p class=\"lead\"> </p>
-            <p>Description: ${user.description}</p>
+            <p>Description: ${order.description}</p>
         </div>
     </c:forEach>
 
