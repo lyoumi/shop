@@ -47,6 +47,15 @@
 
 <body>
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('#password, #confirmationPassword').on('onkeyup', function () {
+        if ($('#password').val() == $('#confirmationPassword').val()) {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
+    });
+</script>
 
 <div class="container">
 
@@ -60,6 +69,14 @@
             <form:input path="username" type="text" id="username" name="username" class="form-control" placeholder="username"/>
             <label for="password" class="sr-only">Password</label>
             <form:input path="password"  type="password" id="password" name="password" class="form-control" placeholder="password"/>
+            <input type="password" id="confirmationPassword" name="confirmationPassword" class="form-control" placeholder="repeat password"/>
+            <span id='message'></span>
+            <label for="name" class="sr-only">Name</label>
+            <form:input path="name"  type="text" id="name" name="name" class="form-control" placeholder="name"/>
+            <label for="surname" class="sr-only">Name</label>
+            <form:input path="surname"  type="text" id="surname" name="surname" class="form-control" placeholder="surname"/>
+            <label for="email" class="sr-only">Name</label>
+            <form:input path="email"  type="text" id="email" name="email" class="form-control" placeholder="email"/>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me

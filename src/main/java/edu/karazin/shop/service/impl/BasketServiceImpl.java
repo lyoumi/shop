@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,8 +53,6 @@ public class BasketServiceImpl implements BasketService {
 
         List<BookList> books = orderList.getBookLists();
 
-        System.err.println("Books " + books);
-
         if (Objects.equals(books, null)) books = new ArrayList<>();
         books.add(book);
 
@@ -71,7 +70,7 @@ public class BasketServiceImpl implements BasketService {
         orderDetails.setQuantity(1);
 
         List<OrderDetails> orderDetailsList = orderList.getOrderDetails();
-        if (Objects.equals(orderDetails, null)) orderDetailsList = new ArrayList<>();
+        if (orderDetailsList == null) orderDetailsList = new ArrayList<>();
 
         orderDetailsList.add(orderDetails);
 
@@ -113,12 +112,10 @@ public class BasketServiceImpl implements BasketService {
     public void addOrderToStory(OrderList order){
         OrderStory orderStory = new OrderStory();
         orderStory.setName(usersDao.findOne(order.getUserId()).getUsername());
-        String description = "";
-        for (BookList book :
-                order.getBookLists()) {
-            description += book.getName() + ", " + book.getPrice() + "; ";
-        }
-        description += "Total: " + order.getTotalPrice() + ".";
+        List<BookList> books = new ArrayList<>(order.getBookLists());
+        orderStory.setBooks(books);
+        orderStory.setDate(new Date());
+        String description = "Total: " + order.getTotalPrice() + ".";
         orderStory.setDescription(description);
         orderStoryDao.save(orderStory);
     }

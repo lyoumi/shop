@@ -50,6 +50,10 @@ public class BookList {
     @LazyCollection(LazyCollectionOption.TRUE)
     private List<OrderList> orderLists;
 
+    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "books")
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private List<OrderStory> ordersStory;
+
     public BookList(){}
 
     public BookList(String name, Integer pages, List<Author> authors, List<Genre> genres, String publisher, Double price) {
@@ -146,5 +150,13 @@ public class BookList {
                 ", authors=" + authors +
                 ", genres=" + genres +
                 '}';
+    }
+
+    public List<OrderStory> getOrdersStory() {
+        return ordersStory;
+    }
+
+    public void setOrdersStory(List<OrderStory> ordersStory) {
+        this.ordersStory = ordersStory;
     }
 }

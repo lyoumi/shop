@@ -52,11 +52,14 @@
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="/books/menu">Home</a></li>
+                <li role="presentation" class="active"><a href="/books/show">Home</a></li>
                 <sec:authorize access="isAuthenticated()">
                     <li role="presentation"><a href="/order">Basket</a></li>
                     <li role="presentation"><a href="/profile">Profile</a></li>
                     <li role="presentation"><a href="/logout">Logout</a></li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li role="presentation"><a href="/admin/menu">Admin menu</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
                     <li role="presentation"><a href="/login">Login</a></li>
@@ -71,6 +74,16 @@
             <h1>
                 Purchased by: ${order.name}
             </h1>
+            <p>Id: ${order.id}</p>
+            <p>Date: ${order.date}</p>
+            Books:
+            <ul>
+                <c:forEach items="${order.books}" var="book">
+                    <li><a href="https://en.wikipedia.org/wiki/${book.name}">${book.name}</a></li>
+                </c:forEach>
+            </ul>
+            <p class=\"lead\"> </p>
+            <p>Description: ${order.description}</p>
             <p class=\"lead\"> </p>
             <p>Description: ${order.description}</p>
         </div>

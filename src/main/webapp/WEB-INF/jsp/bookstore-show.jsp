@@ -51,11 +51,14 @@
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="/books/menu">Home</a></li>
+                <li role="presentation" class="active"><a href="/books/show">Home</a></li>
                 <sec:authorize access="isAuthenticated()">
                     <li role="presentation"><a href="/order">Basket</a></li>
                     <li role="presentation"><a href="/profile">Profile</a></li>
                     <li role="presentation"><a href="/logout">Logout</a></li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li role="presentation"><a href="/admin/menu">Admin menu</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
                     <li role="presentation"><a href="/login">Login</a></li>
@@ -66,11 +69,11 @@
     </div>
 
 
-
     <div class="jumbotron">
         <div class="form-group">
 
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script type="text/javascript"
+                    src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script type="text/javascript">
                 $(document).ready(function () {
                     $('#searchText').keyup(function () {
@@ -90,7 +93,9 @@
             </script>
 
             <form:form modelAttribute="searchForm">
-                <form:input path="searchText" name="searchText" id="searchText" placeholder="Comedy, Tragicomedy, Satire, Horror Fiction, Fantasy, Drama, Mythology, Romance, Manga, Programming,  Scientific, Literary realism" cssClass="form-control"/>
+                <form:input path="searchText" name="searchText" id="searchText"
+                            placeholder="Comedy, Tragicomedy, Satire, Horror Fiction, Fantasy, Drama, Mythology, Romance, Manga, Programming,  Scientific, Literary realism"
+                            cssClass="form-control"/>
                 <input type="submit" value="Search" class="btn btn-lg btn-success"/>
             </form:form>
             <p id="result1"></p>
@@ -98,29 +103,36 @@
     </div>
     <sec:csrfInput/>
 
-    <c:forEach items="${products}" var="order">
+    <c:forEach items="${products}" var="book">
         <div class="jumbotron">
             <h1>
-                    ${order.name}
+                    ${book.name}
             </h1>
-            <p>Pages: ${order.pages}</p>
-            <p>Publisher: ${order.publisher}</p>
-            <p>Price: ${order.price}</p>
+            <p><a class="label label-info label-success" href="https://en.wikipedia.org/wiki/${book.name}">Wiki</a></p>
+            <p>Pages: ${book.pages}</p>
+            <p>Publisher: ${book.publisher}</p>
+            <p>Price: ${book.price}</p>
             <p>Authors:
-                <c:forEach items="${order.authors}" var="author">
-                    ${author.name},
+            <ul>
+                <c:forEach items="${book.authors}" var="author">
+                    <li>${author.name}</li>
                 </c:forEach>
+            </ul>
             </p>
             <p>Genres:
-                <c:forEach items="${order.genres}" var="genre">
-                    ${genre.genrename},
+            <ul>
+                <c:forEach items="${book.genres}" var="genre">
+                    <li>${genre.genrename}</li>
                 </c:forEach>
+            </ul>
             </p>
             <sec:authorize access="hasRole('ADMIN')">
-                <p><a class="btn btn-lg btn-success" role="button" href="/books/${order.id}" type="submit">Edit</a></p>
-                <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${order.id}" type="submit">Remove</a></p>
+                <p><a class="btn btn-lg btn-success" role="button" href="/books/${book.id}" type="submit">Edit</a></p>
+                <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${book.id}"
+                      type="submit">Remove</a></p>
             </sec:authorize>
-            <p><a class="btn btn-lg btn-success" role="button" href="/order/${order.id}" type="submit">Add to bucket</a></p>
+            <p><a class="btn btn-lg btn-success" role="button" href="/order/${book.id}" type="submit">Add to basket</a>
+            </p>
         </div>
     </c:forEach>
 
