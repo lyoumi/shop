@@ -1,9 +1,9 @@
 package edu.karazin.shop.service.impl;
 
 
-import edu.karazin.shop.dao.OrderDao;
-import edu.karazin.shop.dao.OrderStoryDao;
-import edu.karazin.shop.dao.UsersDao;
+import edu.karazin.shop.repository.OrderRepository;
+import edu.karazin.shop.repository.OrderStoryRepository;
+import edu.karazin.shop.repository.UsersRepository;
 import edu.karazin.shop.model.*;
 import edu.karazin.shop.service.BasketService;
 import edu.karazin.shop.service.BookStoreService;
@@ -22,25 +22,25 @@ public class BasketServiceImpl implements BasketService {
     private BookStoreService bookStoreService;
 
     @Autowired
-    private OrderDao orderDao;
+    private OrderRepository orderRepository;
 
     @Autowired
-    private UsersDao usersDao;
+    private UsersRepository usersRepository;
 
     @Autowired
-    private OrderStoryDao orderStoryDao;
+    private OrderStoryRepository orderStoryRepository;
 
     @Override
     public OrderList createOrder(User user) {
         OrderList orderList = new OrderList();
         orderList.setUserId(user.getId());
-        orderDao.save(orderList);
+        orderRepository.save(orderList);
         return orderList;
     }
 
     @Override
     public OrderList getOrderByUserId(User user){
-        OrderList orderListByUserId = orderDao.getOrderListByUserId(user.getId());
+        OrderList orderListByUserId = orderRepository.getOrderListByUserId(user.getId());
         if (Objects.equals(orderListByUserId, null)) orderListByUserId = createOrder(user);
         return orderListByUserId;
     }
@@ -76,7 +76,7 @@ public class BasketServiceImpl implements BasketService {
 
         orderList.setOrderDetails(orderDetailsList);
 
-        orderDao.save(orderList);
+        orderRepository.save(orderList);
 
         return orderList;
     }
@@ -98,36 +98,36 @@ public class BasketServiceImpl implements BasketService {
         order.setTotalPrice(totalPrice);
         order.setBookLists(books);
 
-        orderDao.save(order);
+        orderRepository.save(order);
 
         return order;
     }
 
     @Override
     public void removeOrder(User user){
-        orderDao.delete(getOrderByUserId(user));
+        orderRepository.delete(getOrderByUserId(user));
     }
 
     @Override
     public void addOrderToStory(OrderList order){
         OrderStory orderStory = new OrderStory();
-        orderStory.setName(usersDao.findOne(order.getUserId()).getUsername());
+        orderStory.setName(usersRepository.findOne(order.getUserId()).getUsername());
         List<BookList> books = new ArrayList<>(order.getBookLists());
         orderStory.setBooks(books);
         orderStory.setDate(new Date());
         String description = "Total: " + order.getTotalPrice() + ".";
         orderStory.setDescription(description);
-        orderStoryDao.save(orderStory);
+        orderStoryRepository.save(orderStory);
     }
 
     @Override
     public List<OrderStory> getOrderStory(String name){
-        return orderStoryDao.findAllByName(name);
+        return orderStoryRepository.findAllByName(name);
     }
 
     @Override
     public List<OrderStory> getAllOrders() {
-        return (List<OrderStory>) orderStoryDao.findAll();
+        return (List<OrderStory>) orderStoryRepository.findAll();
     }
 
 }

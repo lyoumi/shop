@@ -1,6 +1,6 @@
 package edu.karazin.shop.service.impl;
 
-import edu.karazin.shop.dao.UsersDao;
+import edu.karazin.shop.repository.UsersRepository;
 import edu.karazin.shop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,11 +18,11 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UsersDao usersDao;
+    private UsersRepository usersRepository;
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = usersDao.getUserByUsername(username);
+        User user = usersRepository.getUserByUsername(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet();
         grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));

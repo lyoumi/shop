@@ -1,8 +1,8 @@
 package edu.karazin.shop.service.impl;
 
-import edu.karazin.shop.dao.AuthorDao;
-import edu.karazin.shop.dao.BookDao;
-import edu.karazin.shop.dao.GenreDao;
+import edu.karazin.shop.repository.AuthorRepository;
+import edu.karazin.shop.repository.BookRepository;
+import edu.karazin.shop.repository.GenreRepository;
 import edu.karazin.shop.model.Author;
 import edu.karazin.shop.model.BookList;
 import edu.karazin.shop.model.Genre;
@@ -19,19 +19,19 @@ import java.util.Objects;
 public class BookStoreServiceImpl implements BookStoreService {
 
     @Autowired
-    private AuthorDao authorDao;
+    private AuthorRepository authorRepository;
 
     @Autowired
-    private GenreDao genreDao;
+    private GenreRepository genreRepository;
 
     @Autowired
-    private BookDao bookDao;
+    private BookRepository bookRepository;
 
     @Override
     public Author insertAuthor(Author author) {
-        Author currentAuthor = authorDao.getAuthorByName(author.getName());
+        Author currentAuthor = authorRepository.getAuthorByName(author.getName());
         if (Objects.equals(currentAuthor, null)) {
-            author = authorDao.save(author);
+            author = authorRepository.save(author);
             return author;
         } else return currentAuthor;
 
@@ -39,43 +39,43 @@ public class BookStoreServiceImpl implements BookStoreService {
 
     @Override
     public Genre insertGenre(Genre genre) {
-        Genre currentGenre = genreDao.getGenreByGenrename(genre.getGenrename());
+        Genre currentGenre = genreRepository.getGenreByGenrename(genre.getGenrename());
         if (Objects.equals(currentGenre, null)) {
-            genre = genreDao.save(genre);
+            genre = genreRepository.save(genre);
             return genre;
         } else return currentGenre;
     }
 
     @Override
     public void insertBook(BookList bookList) {
-        bookDao.save(bookList);
+        bookRepository.save(bookList);
     }
 
     @Override
     public List<BookList> getBookListByGenre(String genre) {
         if (genre != null){
-            if (!Objects.equals(genre, "")) return genreDao.getGenreByGenrename(genre).getBookLists();
-            else return (List<BookList>) bookDao.findAll();
+            if (!Objects.equals(genre, "")) return genreRepository.getGenreByGenrename(genre).getBookLists();
+            else return (List<BookList>) bookRepository.findAll();
         }
-        else return (List<BookList>) bookDao.findAll();
+        else return (List<BookList>) bookRepository.findAll();
     }
 
     @Override
     public BookList getBookById(Long id) {
-        return bookDao.findOne(id);
+        return bookRepository.findOne(id);
     }
 
     @Override
     public void updateBook(BookList bookList) {
-        bookDao.save(bookList);
+        bookRepository.save(bookList);
     }
 
     @Override
-    public void deleteBook(Long id) { bookDao.delete(id);}
+    public void deleteBook(Long id) { bookRepository.delete(id);}
 
     @Override
     public List<String> getGenreNames(String genreName){
-        List<Genre> genreList = (List<Genre>) genreDao.findAll();
+        List<Genre> genreList = (List<Genre>) genreRepository.findAll();
         createGenresIfItNotExist(genreList);
         List<String> genres = new ArrayList<>();
         for (Genre genre :
@@ -87,7 +87,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 
     @Override
     public List<String> getGenreNames() {
-        List<Genre> genreList = (List<Genre>) genreDao.findAll();
+        List<Genre> genreList = (List<Genre>) genreRepository.findAll();
         createGenresIfItNotExist(genreList);
         List<String> genres = new ArrayList<>();
         for (Genre genre :
@@ -106,7 +106,7 @@ public class BookStoreServiceImpl implements BookStoreService {
                 if (name.toString().contains("_")) genre.setGenrename(name.toString().replace("_", " "));
                 else genre.setGenrename(name.toString());
                 genreList.add(genre);
-                genreDao.save(genre);
+                genreRepository.save(genre);
             }
         }
     }

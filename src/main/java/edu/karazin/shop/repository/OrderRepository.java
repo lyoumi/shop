@@ -1,8 +1,8 @@
-package edu.karazin.shop.dao;
+package edu.karazin.shop.repository;
 
 import edu.karazin.shop.model.OrderList;
 import org.springframework.data.repository.CrudRepository;
 
-public interface OrderDao extends CrudRepository<OrderList, Integer> {
+public interface OrderRepository extends CrudRepository<OrderList, Integer> {
     OrderList getOrderListByUserId(Integer id);
 }
