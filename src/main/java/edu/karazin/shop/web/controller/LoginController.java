@@ -2,7 +2,6 @@ package edu.karazin.shop.web.controller;
 
 import edu.karazin.shop.model.User;
 import edu.karazin.shop.service.UserService;
-import edu.karazin.shop.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
