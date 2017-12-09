@@ -21,14 +21,14 @@
 
     <title>Books</title>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/resources/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <link href="/jumbotron-narrow.css" rel="stylesheet">
+    <link href="/resources/css/jumbotron-narrow.css" rel="stylesheet">
 
-    <script src="/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="/js/ie-emulation-modes-warning.js"></script>
+    <script src="/resources/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/resources/js/ie-emulation-modes-warning.js"></script>
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -50,7 +50,7 @@
                         <li role="presentation"><a href="/logout">Logout</a></li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ADMIN')">
-                        <li role="presentation"><a href="/books/menu">Admin menu</a></li>
+                        <li role="presentation"><a href="/admin/menu">Admin menu</a></li>
                     </sec:authorize>
                     <sec:authorize access="isAnonymous()">
                         <li role="presentation"><a href="/login">Login</a></li>
@@ -97,6 +97,6 @@
 
 
 </form>
-<script src="/js/ie10-viewport-bug-workaround.js"></script>
+<script src="/resources/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import edu.karazin.shop.model.User;
 import edu.karazin.shop.service.BookStoreService;
 import edu.karazin.shop.service.BasketService;
 import edu.karazin.shop.service.UserService;
+import edu.karazin.shop.web.controller.util.TotalPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

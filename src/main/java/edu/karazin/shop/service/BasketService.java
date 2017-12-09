@@ -18,7 +18,7 @@ public interface BasketService {
 
     void removeOrder(User user);
 
-    void addOrderToStory(OrderList order);
+    OrderStory addOrderToStory(OrderList order);
 
     List<OrderStory> getOrderStory(String name);
 

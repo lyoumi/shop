@@ -1,12 +1,12 @@
 package edu.karazin.shop.service.impl;
 
 
+import edu.karazin.shop.repository.BookRepository;
 import edu.karazin.shop.repository.OrderRepository;
 import edu.karazin.shop.repository.OrderStoryRepository;
 import edu.karazin.shop.repository.UsersRepository;
 import edu.karazin.shop.model.*;
 import edu.karazin.shop.service.BasketService;
-import edu.karazin.shop.service.BookStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.Objects;
 public class BasketServiceImpl implements BasketService {
 
     @Autowired
-    private BookStoreService bookStoreService;
+    private BookRepository bookRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -76,40 +76,40 @@ public class BasketServiceImpl implements BasketService {
 
         orderList.setOrderDetails(orderDetailsList);
 
-        orderRepository.save(orderList);
+        orderList = orderRepository.save(orderList);
 
         return orderList;
     }
 
     @Override
     public OrderList removeBookFromOrder(User user, Long id){
-        BookList book = bookStoreService.getBookById(id);
+        BookList book = bookRepository.findOne(id);
         OrderList order = getOrderByUserId(user);
 
         List<BookList> books = order.getBookLists();
-        books.remove(book);
+        if (books != null && books.contains(book)) {
+            books.remove(book);
+            double totalPrice = 0;
+            for (BookList bookFromOrder :
+                    books) {
+                totalPrice += bookFromOrder.getPrice();
+            }
 
-        double totalPrice = 0;
-        for (BookList bookFromOrder :
-                books) {
-            totalPrice += bookFromOrder.getPrice();
+            order.setTotalPrice(totalPrice);
+            order.setBookLists(books);
+
+            order = orderRepository.save(order);
         }
-
-        order.setTotalPrice(totalPrice);
-        order.setBookLists(books);
-
-        orderRepository.save(order);
-
         return order;
     }
 
     @Override
     public void removeOrder(User user){
-        orderRepository.delete(getOrderByUserId(user));
+        orderRepository.delete(getOrderByUserId(user).getOrderId());
     }
 
     @Override
-    public void addOrderToStory(OrderList order){
+    public OrderStory addOrderToStory(OrderList order){
         OrderStory orderStory = new OrderStory();
         orderStory.setName(usersRepository.findOne(order.getUserId()).getUsername());
         List<BookList> books = new ArrayList<>(order.getBookLists());
@@ -117,7 +117,7 @@ public class BasketServiceImpl implements BasketService {
         orderStory.setDate(new Date());
         String description = "Total: " + order.getTotalPrice() + ".";
         orderStory.setDescription(description);
-        orderStoryRepository.save(orderStory);
+        return orderStoryRepository.save(orderStory);
     }
 
     @Override

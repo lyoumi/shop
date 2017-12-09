@@ -4,6 +4,7 @@ import edu.karazin.shop.model.Author;
 import edu.karazin.shop.model.BookList;
 import edu.karazin.shop.model.Genre;
 import edu.karazin.shop.service.BookStoreService;
+import edu.karazin.shop.web.controller.util.BookSearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
