@@ -10,6 +10,7 @@ import edu.karazin.shop.model.Genres;
 import edu.karazin.shop.service.BookStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +48,13 @@ public class BookStoreServiceImpl implements BookStoreService {
     }
 
     @Override
-    public void insertBook(BookList bookList) {
-        bookRepository.save(bookList);
+    public BookList insertBook(BookList bookList) {
+        return bookRepository.save(bookList);
     }
 
     @Override
     public List<BookList> getBookListByGenre(String genre) {
-        if (genre != null){
-            if (!Objects.equals(genre, "")) return genreRepository.getGenreByGenrename(genre).getBookLists();
-            else return (List<BookList>) bookRepository.findAll();
-        }
+        if (!StringUtils.isEmpty(genre)) return genreRepository.getGenreByGenrename(genre).getBookLists();
         else return (List<BookList>) bookRepository.findAll();
     }
 
@@ -66,8 +64,8 @@ public class BookStoreServiceImpl implements BookStoreService {
     }
 
     @Override
-    public void updateBook(BookList bookList) {
-        bookRepository.save(bookList);
+    public BookList updateBook(BookList bookList) {
+        return bookRepository.save(bookList);
     }
 
     @Override

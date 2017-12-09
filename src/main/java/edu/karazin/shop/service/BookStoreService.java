@@ -11,13 +11,13 @@ public interface BookStoreService {
 
     Genre insertGenre(Genre genre);
 
-    void insertBook(BookList bookList);
+    BookList insertBook(BookList bookList);
 
     List<BookList> getBookListByGenre(String genre);
 
     BookList getBookById(Long id);
 
-    void updateBook(BookList bookList);
+    BookList updateBook(BookList bookList);
 
     void deleteBook(Long id);
 
