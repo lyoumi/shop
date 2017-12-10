@@ -2,9 +2,11 @@ package edu.karazin.shop.model;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,18 +21,23 @@ public class User {
     private Integer id;
 
     @Column(name = "username")
+    @Size(min = 2, max = 10)
     private String username;
 
     @Column(name = "password")
+    @Size(min = 4)
     private String password;
 
     @Column(name = "name")
+    @Size(min = 2, max = 15)
     private String name;
 
     @Column(name = "surname")
+    @Size(min = 2, max = 15)
     private String surname;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     public String getName() {

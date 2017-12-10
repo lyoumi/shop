@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @Scope("session")
@@ -23,16 +26,20 @@ public class LoginController {
 
     @GetMapping(value = "signup")
     public String loadSighUpPage(Model model){
-        model.addAttribute("userData", new User());
+        model.addAttribute("user", new User());
         return "bookstore-signup";
     }
 
     @PostMapping(path = "signup")
-    public String signUpHandling(User user, @RequestParam(name = "confirmationPassword") String confirmationPassword){
-        if (user.getPassword().equals(confirmationPassword)){
-            if(userService.createUser(user)) return "redirect:/login";
+    public String signUpHandling(@ModelAttribute @Valid User user, @RequestParam(name = "confirmationPassword") String confirmationPassword, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "signup";
+        }else {
+            if (user.getPassword().equals(confirmationPassword)){
+                if(userService.createUser(user)) return "redirect:/login";
+            }
+            return "redirect:/signup";
         }
-        return "redirect:/signup";
 
     }
 }

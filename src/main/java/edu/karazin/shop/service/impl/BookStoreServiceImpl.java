@@ -54,8 +54,9 @@ public class BookStoreServiceImpl implements BookStoreService {
 
     @Override
     public List<BookList> getBookListByGenre(String genre) {
-        if (!StringUtils.isEmpty(genre)) return genreRepository.getGenreByGenrename(genre).getBookLists();
-        else return (List<BookList>) bookRepository.findAll();
+        List<BookList> bookList = bookRepository.findAllByDisabledBook(false);
+        if (!StringUtils.isEmpty(genre)) bookList = genreRepository.getGenreByGenrename(genre).getBookLists();
+        return bookList;
     }
 
     @Override
@@ -69,7 +70,11 @@ public class BookStoreServiceImpl implements BookStoreService {
     }
 
     @Override
-    public void deleteBook(Long id) { bookRepository.delete(id);}
+    public void deleteBook(Long id) {
+        BookList book = getBookById(id);
+        book.setDisabledBook(true);
+        bookRepository.save(book);
+    }
 
     @Override
     public List<String> getGenreNames(String genreName){

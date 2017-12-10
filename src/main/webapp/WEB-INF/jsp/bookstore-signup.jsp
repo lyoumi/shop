@@ -5,11 +5,11 @@
   Time: 11:40 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page session="true"%>
+<%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
@@ -43,6 +43,20 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+        .error {
+            color: #ff0000;
+        }
+
+        .errorblock {
+            color: #000;
+            background-color: #ffEEEE;
+            border: 3px solid #ff0000;
+            padding: 8px;
+            margin: 16px;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,7 +64,8 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
     $('#password, #confirmationPassword').on('onkeyup', function () {
-        debugger;        if ($('#password').val() == $('#confirmationPassword').val()) {
+        debugger;
+        if ($('#password').val() == $('#confirmationPassword').val()) {
             $('#message').html('Matching').css('color', 'green');
         } else
             $('#message').html('Not Matching').css('color', 'red');
@@ -60,31 +75,35 @@
 <div class="container">
 
 
-    <form action="<c:url value="signup" />" method="POST" class="form-signin">
-        <form:form modelAttribute="userData">
+        <form:form method="post" action="/signup" modelAttribute="user" class="form-signim">
             <sec:csrfInput/>
+            <%--<form:errors path="*" cssClass="errorblock" element="div"/>--%>
             <h2 class="form-signin-heading">Please sign in</h2>
-            <form:input path="id" style="display: none;"/>
+            <form:input path="id" name="id" style="display: none;"/>
             <label for="username" class="sr-only">Login</label>
-            <form:input path="username" type="text" id="username" name="username" class="form-control" placeholder="username"/>
+            <form:input path="username" type="text" id="username" name="username" class="form-control"
+                        placeholder="username"/>
+            <form:errors path="username"/>
             <label for="password" class="sr-only">Password</label>
-            <form:input path="password"  type="password" id="password" name="password" class="form-control" placeholder="password"/>
-            <input type="password" id="confirmationPassword" name="confirmationPassword" class="form-control" placeholder="repeat password"/>
+            <form:input path="password" type="password" id="password" name="password" class="form-control"
+                        placeholder="password"/>
+            <form:errors path="password"/>
+            <input type="password" id="confirmationPassword" name="confirmationPassword" class="form-control"
+                   placeholder="repeat password"/>
             <span id='message'></span>
             <label for="name" class="sr-only">Name</label>
-            <form:input path="name"  type="text" id="name" name="name" class="form-control" placeholder="name"/>
+            <form:input path="name" type="text" id="name" name="name" class="form-control" placeholder="name"/>
+            <form:errors path="name"/>
             <label for="surname" class="sr-only">Name</label>
-            <form:input path="surname"  type="text" id="surname" name="surname" class="form-control" placeholder="surname"/>
+            <form:input path="surname" type="text" id="surname" name="surname" class="form-control"
+                        placeholder="surname"/>
+            <form:errors path="surname"/>
             <label for="email" class="sr-only">Name</label>
-            <form:input path="email"  type="text" id="email" name="email" class="form-control" placeholder="email"/>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="signUp" >Sign up</button>
+            <form:input path="email" type="text" id="email" name="email" class="form-control" placeholder="email"/>
+            <form:errors path="email"/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="signUp">Sign up</button>
         </form:form>
-    </form>
+
 </div> <!-- /container -->
 
 

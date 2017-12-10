@@ -5,6 +5,7 @@ import edu.karazin.shop.model.BookList;
 import edu.karazin.shop.model.Genre;
 import edu.karazin.shop.service.BookStoreService;
 import edu.karazin.shop.web.controller.util.BookSearchForm;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -38,14 +39,16 @@ public class BookController {
 
     @PostMapping(path = "show")
     public String loadBookListByGenre(Model model, @ModelAttribute(value = "searchForm") BookSearchForm genre) {
-        if (bookStoreServiceImpl.getGenreNames().contains(genre.getSearchText())){
-            model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(genre.getSearchText()));
+        String searchText = StringUtils.stripStart(genre.getSearchText(), null).toLowerCase();
+        searchText = StringUtils.stripEnd(searchText, null);
+        if (bookStoreServiceImpl.getGenreNames().contains(searchText)){
+            model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(searchText));
         }
         return "bookstore-show";
 
     }
 
-    @GetMapping( path = "{id}")
+    @GetMapping( path = "edit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String loadBook(Model model, @PathVariable("id") Long bookId){
         BookList bookList = bookStoreServiceImpl.getBookById(bookId);
@@ -53,7 +56,7 @@ public class BookController {
         return "product-edit";
     }
 
-    @PostMapping(path = "{id}")
+    @PostMapping(path = "edit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String updateBook(BookList bookList,
                              BindingResult bindingResult,
@@ -66,17 +69,17 @@ public class BookController {
         String[] genresNames = genresForm.split(", ");
         ArrayList<Genre> genres = new ArrayList<>();
 
-        for (String s :
+        for (String authorName :
                 authorsNames) {
             Author author = new Author();
-            author.setName(s);
+            author.setName(authorName);
             authors.add(bookStoreServiceImpl.insertAuthor(author));
         }
 
-        for (String s :
+        for (String genreName :
                 genresNames) {
             Genre genre = new Genre();
-            genre.setGenrename(s);
+            genre.setGenrename(StringUtils.stripStart(genreName, null).toLowerCase());
             System.out.println(genre);
             genres.add(bookStoreServiceImpl.insertGenre(genre));
         }
@@ -109,21 +112,21 @@ public class BookController {
         String[] genresNames = genresForm.split(", ");
         ArrayList<Genre> genres = new ArrayList<>();
 
-        for (String s :
+        for (String authorName :
                 authorsNames) {
             Author author = new Author();
-            author.setName(s);
+            author.setName(authorName);
             authors.add(bookStoreServiceImpl.insertAuthor(author));
         }
 
-        for (String s :
+        for (String genreName :
                 genresNames) {
             Genre genre = new Genre();
-            genre.setGenrename(s);
+            genre.setGenrename(StringUtils.stripStart(genreName, null).toLowerCase());
             System.out.println(genre);
             genres.add(bookStoreServiceImpl.insertGenre(genre));
         }
-
+        bookList.setDisabledBook(false);
         bookList.setGenres(genres);
         bookList.setAuthors(authors);
 
@@ -141,7 +144,17 @@ public class BookController {
     @GetMapping(path = "showhints")
     @ResponseBody
     public List<String> showHints(@RequestParam(value = "genre")String genre){
-        return bookStoreServiceImpl.getGenreNames(genre);
+        genre = StringUtils.stripStart(genre, null);
+        genre = StringUtils.stripEnd(genre, null);
+        return bookStoreServiceImpl.getGenreNames(genre.toLowerCase());
     }
+
+    @GetMapping(path = "book/{id}")
+    public String getCurrentBook(Model model, @PathVariable(name = "id") Long bookId){
+        BookList bookList = bookStoreServiceImpl.getBookById(bookId);
+        model.addAttribute("book", bookList);
+        return "bookstore-book";
+    }
+
 
 }

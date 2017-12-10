@@ -108,31 +108,8 @@
             <h1>
                     ${book.name}
             </h1>
-            <p><a class="label label-info label-success" href="https://en.wikipedia.org/wiki/${book.name}">Wiki</a></p>
-            <p>Pages: ${book.pages}</p>
-            <p>Publisher: ${book.publisher}</p>
+            <p><a class="label label-info label-success" href="/books/book/${book.id}">More</a></p>
             <p>Price: ${book.price}</p>
-            <p>Authors:
-            <ul>
-                <c:forEach items="${book.authors}" var="author">
-                    <li>${author.name}</li>
-                </c:forEach>
-            </ul>
-            </p>
-            <p>Genres:
-            <ul>
-                <c:forEach items="${book.genres}" var="genre">
-                    <li>${genre.genrename}</li>
-                </c:forEach>
-            </ul>
-            </p>
-            <sec:authorize access="hasRole('ADMIN')">
-                <p><a class="btn btn-lg btn-success" role="button" href="/books/${book.id}" type="submit">Edit</a></p>
-                <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${book.id}"
-                      type="submit">Remove</a></p>
-            </sec:authorize>
-            <p><a class="btn btn-lg btn-success" role="button" href="/order/${book.id}" type="submit">Add to basket</a>
-            </p>
         </div>
     </c:forEach>
 

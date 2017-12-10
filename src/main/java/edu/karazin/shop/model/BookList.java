@@ -5,7 +5,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class BookList {
@@ -26,6 +25,9 @@ public class BookList {
 
     @Column(name = "price")
     private Double price;
+
+    @Column(name = "disabled_book")
+    private boolean disabledBook;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -191,5 +193,13 @@ public class BookList {
         result = 31 * result + (orderLists != null ? orderLists.hashCode() : 0);
         result = 31 * result + (ordersStory != null ? ordersStory.hashCode() : 0);
         return result;
+    }
+
+    public boolean isDisabledBook() {
+        return disabledBook;
+    }
+
+    public void setDisabledBook(boolean disabledBook) {
+        this.disabledBook = disabledBook;
     }
 }

@@ -16,29 +16,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--<link rel="icon" href="../../favicon.ico">--%>
 
     <title>Books</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/resources/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="/resources/jumbotron-narrow.css" rel="stylesheet">
+    <link href="/resources/css/jumbotron-narrow.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]>
     <script src="/resources/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/resources/js/ie-emulation-modes-warning.js"></script>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -46,7 +37,7 @@
 
 <body>
 
-<form>
+<form action="<c:url value="{id}" />" method="POST">
 
     <div class="container">
         <div class="header clearfix">
@@ -70,35 +61,50 @@
         </div>
 
 
-        <c:forEach items="${products}" var="order">
-            <sec:csrfInput/>
-            <div class="jumbotron">
-                <h1>
-                        ${order.name}
-                </h1>
-                <p><a class="label label-info label-success" href="/books/book/${order.id}">More</a></p>
-                <p class=\"lead\">Id: ${order.id} </p>
-                <p>Price: ${order.price}</p>
-                <p><a class="btn btn-lg btn-success" role="button" href="/order/remove/${order.id}"
-                      type="submit">Remove</a></p>
-            </div>
-        </c:forEach>
 
-        <form:form modelAttribute="totalPrice">
-            <h1>Total Price: ${totalPrice.price}</h1>
-            <div class="jumbotron">
-                <form:label path="price" name="price" id="price"/>
+        <div class="jumbotron">
 
-                <p><a class="btn btn-lg btn-success" role="button" href="/order/complete" type="submit">Buy</a></p>
-            </div>
-        </form:form>
+            <form:form modelAttribute="book">
+                <sec:csrfInput/>
+                <fieldset>
+                    <h1>
+                            ${book.name}
+                    </h1>
+                    <p><a class="label label-info label-success" href="https://en.wikipedia.org/wiki/${book.name}">Wiki</a></p>
+                    <p>Pages: ${book.pages}</p>
+                    <p>Publisher: ${book.publisher}</p>
+                    <p>Price: ${book.price}</p>
+                    <p>Authors:
+                    <ul>
+                        <c:forEach items="${book.authors}" var="author">
+                            <li>${author.name}</li>
+                        </c:forEach>
+                    </ul>
+                    </p>
+                    <p>Genres:
+                    <ul>
+                        <c:forEach items="${book.genres}" var="genre">
+                            <li>${genre.genrename}</li>
+                        </c:forEach>
+                    </ul>
+                    </p>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <p><a class="btn btn-lg btn-success" role="button" href="/books/edit/${book.id}" type="submit">Edit</a></p>
+                        <p><a class="btn btn-lg btn-success" role="button" href="/books/remove/${book.id}"
+                              type="submit">Remove</a></p>
+                    </sec:authorize>
+                    <p><a class="btn btn-lg btn-success" role="button" href="/order/${book.id}" type="submit">Add to basket</a>
+                    </p>
+                </fieldset>
+
+            </form:form>
+        </div>
 
 
-    </div> <!-- /container -->
+    </div>
 
 
 </form>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/resources/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
