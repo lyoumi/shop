@@ -36,6 +36,8 @@ public class LoginController {
             return "signup";
         }else {
             if (user.getPassword().equals(confirmationPassword)){
+                user.setUsername(user.getUsername().replaceAll(" ", ""));
+                user.setPassword(user.getPassword().replaceAll(" ", ""));
                 if(userService.createUser(user)) return "redirect:/login";
             }
             return "redirect:/signup";

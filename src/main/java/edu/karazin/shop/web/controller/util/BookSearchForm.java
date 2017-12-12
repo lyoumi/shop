@@ -19,4 +19,19 @@ public class BookSearchForm {
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BookSearchForm that = (BookSearchForm) o;
+
+        return searchText != null ? searchText.equals(that.searchText) : that.searchText == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return searchText != null ? searchText.hashCode() : 0;
+    }
 }

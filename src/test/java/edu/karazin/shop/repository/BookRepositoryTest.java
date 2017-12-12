@@ -13,20 +13,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class BookRepositoryTest extends BaseBookRepositoryTest {
 
     @Autowired
     BookRepository bookRepository;
-
-    @After
-    public void cleaner(){
-        bookRepository.deleteAll();
-    }
 
     @Test
     public void shouldAddBook(){
@@ -53,24 +49,52 @@ public class BookRepositoryTest extends BaseBookRepositoryTest {
 
         BookList actual = bookRepository.findOne(save2.getId());
 
-        assertNotEquals(save, actual);
+        assertEquals(actual.getName(), "Test2");
         assertEquals(save.getId(), actual.getId());
     }
 
     @Test
     public void shouldDeleteBook(){
-        BookList book = new BookList();
-        book.setId(1L);
-        book.setName("Test");
+        BookList book = getBook(1L);
 
         BookList save = bookRepository.save(book);
 
-        BookList actual = bookRepository.findOne(1L);
+        BookList actual = bookRepository.findOne(save.getId());
+
         assertEquals(save, actual);
 
-        bookRepository.delete(1L);
+        bookRepository.delete(actual);
 
         BookList deleted = bookRepository.findOne(1L);
         assertNull(deleted);
+    }
+
+    @Test
+    public void shouldFindAll(){
+        BookList book1 = getBook(1L);
+        BookList book2 = getBook(2L);
+
+        bookRepository.save(book1);
+        bookRepository.save(book2);
+
+        List<BookList> books = (List<BookList>) bookRepository.findAll();
+        assertEquals(2, books.size());
+    }
+
+    @Test
+    public void shouldFindAllByDisabledBook(){
+        BookList book1 = getBook(1L);
+        book1.setDisabledBook(false);
+        BookList book2 = getBook(2L);
+        book2.setDisabledBook(true);
+
+        bookRepository.save(book1);
+        bookRepository.save(book2);
+
+        List<BookList> disabledBooks = bookRepository.findAllByDisabledBook(true);
+        List<BookList> notDisabledBooks = bookRepository.findAllByDisabledBook(false);
+
+        assertEquals(1, disabledBooks.size());
+        assertEquals(1, notDisabledBooks.size());
     }
 }

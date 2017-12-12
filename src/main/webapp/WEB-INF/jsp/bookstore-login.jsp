@@ -62,11 +62,6 @@
             <form:input path="password"  type="password" id="password" name="password" class="form-control" placeholder="password"/>
             <label for="role" class="sr-only">Password</label>
             <form:input path="role" type="text" class="form-control" style="display:none;" placeholder="role"/>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit" name="SignIn">Sign in</button>
             <p><a class="btn btn-lg btn-primary btn-block" role="button" type="submit" href="/signup">Sign up</a></p>
         </form:form>

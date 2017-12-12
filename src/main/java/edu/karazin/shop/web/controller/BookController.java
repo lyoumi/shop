@@ -155,6 +155,4 @@ public class BookController {
         model.addAttribute("book", bookList);
         return "bookstore-book";
     }
-
-
 }

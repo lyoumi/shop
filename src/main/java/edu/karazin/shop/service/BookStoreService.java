@@ -19,7 +19,7 @@ public interface BookStoreService {
 
     BookList updateBook(BookList bookList);
 
-    void deleteBook(Long id);
+    BookList deleteBook(Long id);
 
     List<String> getGenreNames(String genreName);
 

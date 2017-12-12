@@ -9,19 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class GenreRepositoryTest extends BaseGenreRepositoryTest{
 
     @Autowired
     GenreRepository genreRepository;
-
-    @After
-    public void cleaner(){
-        genreRepository.deleteAll();
-    }
 
     @Test
     public void shouldAddGenre(){
@@ -37,16 +33,19 @@ public class GenreRepositoryTest extends BaseGenreRepositoryTest{
     public void shouldUpdateGenre(){
         Genre genre = getGenre(1);
 
-        genreRepository.save(genre);
+        Genre save1 = genreRepository.save(genre);
 
-        Genre save = genreRepository.findOne(genre.getGenreid());
-        save.setGenrename("Test2");
-        genreRepository.save(save);
+        Genre save = genreRepository.findOne(save1.getGenreid());
 
-        Genre actual = genreRepository.findOne(save.getGenreid());
+        save1.setGenrename("Test2");
 
-        assertNotEquals(genre, actual);
-        assertEquals(genre.getGenreid(), actual.getGenreid());
+        Genre save2 = genreRepository.save(save1);
+
+        Genre actual = genreRepository.findOne(save2.getGenreid());
+
+        assertEquals("Test2", actual.getGenrename());
+        assertEquals(save.getGenreid(), actual.getGenreid());
+
     }
 
     @Test
@@ -59,5 +58,18 @@ public class GenreRepositoryTest extends BaseGenreRepositoryTest{
         assertEquals(save, actual);
 
         genreRepository.delete(actual.getGenreid());
+    }
+
+    @Test
+    public void shouldFindAll(){
+        Genre genre1 = getGenre(1);
+        Genre genre2 = getGenre(2);
+
+        genreRepository.save(genre1);
+        genreRepository.save(genre2);
+
+        List<Genre> genres = (List<Genre>) genreRepository.findAll();
+
+        assertEquals(2, genres.size());
     }
 }

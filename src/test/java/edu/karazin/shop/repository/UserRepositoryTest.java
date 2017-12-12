@@ -44,12 +44,12 @@ public class UserRepositoryTest extends BaseUserRepositoryTest {
         usersRepository.save(user);
 
         User save = usersRepository.findOne(user.getId());
-        save.setUsername("Test2");
-        save.setPassword("Test2");
-        save.setEmail("Test2");
-        save.setName("Test2");
-        save.setSurname("Test2");
-        save.setRole("Test2");
+        save.setUsername("Secondtester");
+        save.setPassword("Secondtester");
+        save.setEmail("Secondtester@secondtester.com");
+        save.setName("Secondtester");
+        save.setSurname("Secondtester");
+        save.setRole("Secondtester");
 
         usersRepository.save(save);
 

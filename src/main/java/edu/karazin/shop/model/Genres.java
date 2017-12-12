@@ -3,18 +3,7 @@ package edu.karazin.shop.model;
 /**
  * Initial genre data.
  */
-public enum Genres {
-    Fantasy,
-    Comedy,
-    Drama,
-    Horror_fiction,
-    Literary_realism,
-    Romance,
-    Satire,
-    Tragedy,
-    Tragicomedy,
-    Mythology,
-    Manga,
-    Programing,
-    Scientific
+public class Genres {
+
+    public static String initGenres = "fantasy,comedy,drama,horror_fiction,literary_realism,romance,satire,tragedy,tragicomedy,mythology,manga,programing,scientific";
 }

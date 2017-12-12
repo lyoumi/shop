@@ -15,7 +15,7 @@ public class BaseAuthorRepositoryTest {
 
     public Author getAuthor(int id){
         Author author = new Author();
-        author.setId(id);
+//        author.setId();
         author.setName("Test" + id);
         author.setBookLists(new ArrayList<>());
         return author;

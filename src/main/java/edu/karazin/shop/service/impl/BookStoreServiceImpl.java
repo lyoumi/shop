@@ -70,10 +70,10 @@ public class BookStoreServiceImpl implements BookStoreService {
     }
 
     @Override
-    public void deleteBook(Long id) {
+    public BookList deleteBook(Long id) {
         BookList book = getBookById(id);
         book.setDisabledBook(true);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     @Override
@@ -102,12 +102,12 @@ public class BookStoreServiceImpl implements BookStoreService {
 
     private void createGenresIfItNotExist(List<Genre> genreList){
         if (Objects.equals(genreList, null) || genreList.isEmpty()) {
-            Genres[] genreArray = Genres.values();
-            for (Genres name :
+            String[] genreArray = Genres.initGenres.split(",");
+            for (String name :
                     genreArray) {
                 Genre genre = new Genre();
-                if (name.toString().contains("_")) genre.setGenrename(name.toString().replace("_", " "));
-                else genre.setGenrename(name.toString());
+                if (name.contains("_")) genre.setGenrename(name.replace("_", " "));
+                else genre.setGenrename(name);
                 genreList.add(genre);
                 genreRepository.save(genre);
             }

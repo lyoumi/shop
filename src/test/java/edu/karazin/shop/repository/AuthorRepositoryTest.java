@@ -14,16 +14,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class AuthorRepositoryTest extends BaseAuthorRepositoryTest {
 
     @Autowired
     AuthorRepository authorRepository;
 
-    @After
-    public void cleaner(){
-        authorRepository.deleteAll();
-    }
 
     @Test
     public void shouldAddAuthor(){
@@ -44,14 +39,12 @@ public class AuthorRepositoryTest extends BaseAuthorRepositoryTest {
 
         assertEquals(save, actual);
 
-        actual.setId(1);
         actual.setName("Test2");
 
-        Author saveNew = authorRepository.save(actual);
-        Author update = authorRepository.findOne(saveNew.getId());
+        Author update = authorRepository.findOne(save.getId());
 
-        assertNotEquals(author, update);
         assertEquals(author.getId(), update.getId());
+        assertEquals("Test2", update.getName());
     }
 
     @Test
@@ -80,6 +73,6 @@ public class AuthorRepositoryTest extends BaseAuthorRepositoryTest {
 
         List<Author> authors = (List<Author>) authorRepository.findAll();
 
-        assertEquals(authors.size(), 2);
+        assertEquals(2, authors.size());
     }
 }

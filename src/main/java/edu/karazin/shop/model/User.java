@@ -21,7 +21,7 @@ public class User {
     private Integer id;
 
     @Column(name = "username")
-    @Size(min = 2, max = 10)
+    @Size(min = 2, max = 15)
     private String username;
 
     @Column(name = "password")

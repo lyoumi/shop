@@ -113,11 +113,12 @@ public class BookStoreServiceTest {
 
     @Test
     public void shouldDeleteBook(){
-        when(bookRepository.findOne(0L)).thenReturn(new BookList());
+        when(bookRepository.findOne(anyLong())).thenReturn(new BookList());
+        when(bookRepository.save((BookList) anyObject())).thenReturn(new BookList());
 
-        bookStoreService.deleteBook(0L);
+        BookList book = bookStoreService.deleteBook(0L);
 
-        verify(bookRepository, times(1)).delete(0L);
+        assertNotNull(book);
     }
 
     @Test

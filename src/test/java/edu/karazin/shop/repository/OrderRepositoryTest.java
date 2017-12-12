@@ -15,16 +15,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class OrderRepositoryTest extends BaseOrderRepositoryTest {
 
     @Autowired
     OrderRepository orderRepository;
 
-    @After
-    public void cleaner(){
-        orderRepository.deleteAll();
-    }
 
     @Test
     public void shouldAddOrder(){
@@ -51,7 +46,8 @@ public class OrderRepositoryTest extends BaseOrderRepositoryTest {
         OrderList saveNew = orderRepository.save(actual);
         OrderList update = orderRepository.findOne(saveNew.getOrderId());
 
-        assertNotEquals(update, save);
+        Double second = 2D;
+        assertEquals(second, update.getTotalPrice());
     }
 
     @Test

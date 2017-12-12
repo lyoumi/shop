@@ -14,16 +14,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class OrderStoryRepositoryTest extends BaseOrderStoryRepository {
 
     @Autowired
     OrderStoryRepository orderStoryRepository;
-
-    @After
-    public void cleaner(){
-        orderStoryRepository.deleteAll();
-    }
 
     @Test
     public void shouldAddOrderStory(){
@@ -39,19 +33,19 @@ public class OrderStoryRepositoryTest extends BaseOrderStoryRepository {
     public void shouldUpdateOrderStory(){
         OrderStory orderStory = getOrderStory(1);
 
-        OrderStory save = orderStoryRepository.save(orderStory);
-        OrderStory actual = orderStoryRepository.findOne(save.getId());
+        OrderStory save1 = orderStoryRepository.save(orderStory);
 
-        assertEquals(save, actual);
+        OrderStory save = orderStoryRepository.findOne(save1.getId());
 
-        actual.setId(1);
-        actual.setName("Test2");
+        save1.setName("Test2");
 
-        OrderStory saveNew = orderStoryRepository.save(actual);
-        OrderStory update = orderStoryRepository.findOne(saveNew.getId());
+        OrderStory save2 = orderStoryRepository.save(save1);
 
-        assertNotEquals(update, save);
-        assertEquals(update.getId(), save.getId());
+        OrderStory actual = orderStoryRepository.findOne(save2.getId());
+
+        assertEquals("Test2", actual.getName());
+        assertEquals(save.getId(), actual.getId());
+
     }
 
     @Test

@@ -14,12 +14,12 @@ public class BaseUserRepositoryTest {
     public User getUser(int id){
         User user = new User();
         user.setId(id);
-        user.setUsername("Test" + id);
-        user.setPassword("Test" + id);
-        user.setEmail("Test" + id);
-        user.setName("Test" + id);
-        user.setSurname("Test" + id);
-        user.setRole("Test" + id);
+        user.setUsername("Tester" + id);
+        user.setPassword("Tester" + id);
+        user.setEmail("Test@test.com");
+        user.setName("Tester");
+        user.setSurname("Tester");
+        user.setRole("Tester");
         return user;
     }
 }
