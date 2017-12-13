@@ -38,8 +38,8 @@ public class OrderController {
     @PreAuthorize("isAuthenticated()")
     public String getOrderPage(Model model, Principal principal) {
         User currentUser = userService.getUserByName(principal.getName());
-        List<BookList> books = basketService.getOrderByUserId(currentUser).getBookLists();
-        OrderList order = basketService.getOrderByUserId(currentUser);
+        List<BookList> books = basketService.getOrCreateOrderByUserId(currentUser).getBookLists();
+        OrderList order = basketService.getOrCreateOrderByUserId(currentUser);
         model.addAttribute("products", books);
         model.addAttribute("totalPrice", new TotalPrice(order.getTotalPrice()));
         return "bookstore-order";
@@ -65,7 +65,7 @@ public class OrderController {
     @PreAuthorize("isAuthenticated()")
     public String completeOrder(Principal principal){
         User user = userService.getUserByName(principal.getName());
-        OrderList order = basketService.getOrderByUserId(user);
+        OrderList order = basketService.getOrCreateOrderByUserId(user);
         basketService.addOrderToStory(order);
         basketService.removeOrder(user);
         return "redirect:/books/show";

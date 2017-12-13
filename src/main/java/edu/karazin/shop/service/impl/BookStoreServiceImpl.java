@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class BookStoreServiceImpl implements BookStoreService {
@@ -55,8 +56,14 @@ public class BookStoreServiceImpl implements BookStoreService {
     @Override
     public List<BookList> getBookListByGenre(String genre) {
         List<BookList> bookList = bookRepository.findAllByDisabledBook(false);
-        if (!StringUtils.isEmpty(genre)) bookList = genreRepository.getGenreByGenrename(genre).getBookLists();
-        return bookList;
+        ArrayList<BookList> list = new ArrayList<>();
+        if (!StringUtils.isEmpty(genre)){
+            for (BookList book :
+                    bookList) {
+                if (!book.isDisabledBook() && book.getGenres().stream().map(Genre::getGenrename).collect(Collectors.toList()).contains(genre)) list.add(book);
+            }
+        }
+        return list;
     }
 
     @Override

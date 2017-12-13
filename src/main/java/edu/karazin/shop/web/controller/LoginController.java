@@ -31,7 +31,7 @@ public class LoginController {
     }
 
     @PostMapping(path = "signup")
-    public String signUpHandling(@ModelAttribute @Valid User user, @RequestParam(name = "confirmationPassword") String confirmationPassword, BindingResult bindingResult){
+    public String signUpHandling(@Valid User user, @RequestParam(name = "confirmationPassword") String confirmationPassword, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return "signup";
         }else {

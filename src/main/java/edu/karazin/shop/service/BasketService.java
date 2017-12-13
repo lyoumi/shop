@@ -10,7 +10,7 @@ import java.util.List;
 public interface BasketService {
     OrderList createOrder(User user);
 
-    OrderList getOrderByUserId(User user);
+    OrderList getOrCreateOrderByUserId(User user);
 
     OrderList addBookToOrder(User user, BookList bookList);
 

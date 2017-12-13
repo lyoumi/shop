@@ -41,8 +41,8 @@ public class BookController {
     public String loadBookListByGenre(Model model, @ModelAttribute(value = "searchForm") BookSearchForm genre) {
         String searchText = StringUtils.stripStart(genre.getSearchText(), null).toLowerCase();
         searchText = StringUtils.stripEnd(searchText, null);
+        model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(searchText));
         if (bookStoreServiceImpl.getGenreNames().contains(searchText)){
-            model.addAttribute("products", bookStoreServiceImpl.getBookListByGenre(searchText));
         }
         return "bookstore-show";
 

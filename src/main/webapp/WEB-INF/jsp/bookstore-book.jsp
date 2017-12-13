@@ -25,7 +25,7 @@
 
     <link href="/resources/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <link href="/resources/css/jumbotron-narrow.css" rel="stylesheet">
+    <%--<link href="/resources/css/jumbotron-narrow.css" rel="stylesheet">--%>
 
     <script src="/resources/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/resources/js/ie-emulation-modes-warning.js"></script>

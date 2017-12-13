@@ -3,6 +3,7 @@ package edu.karazin.shop.model;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -37,7 +38,8 @@ public class User {
     private String surname;
 
     @Column(name = "email")
-    @Email
+    @Email(message = "Pls, enter valid email")
+    @NotEmpty(message = "Pls, enter email")
     private String email;
 
     public String getName() {

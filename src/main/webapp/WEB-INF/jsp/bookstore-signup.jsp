@@ -43,20 +43,6 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <style>
-        .error {
-            color: #ff0000;
-        }
-
-        .errorblock {
-            color: #000;
-            background-color: #ffEEEE;
-            border: 3px solid #ff0000;
-            padding: 8px;
-            margin: 16px;
-        }
-    </style>
 </head>
 
 <body>
@@ -77,7 +63,6 @@
 
         <form:form method="post" action="/signup" modelAttribute="user" class="form-signim">
             <sec:csrfInput/>
-            <%--<form:errors path="*" cssClass="errorblock" element="div"/>--%>
             <h2 class="form-signin-heading">Please sign in</h2>
             <form:input path="id" name="id" style="display: none;"/>
             <label for="username" class="sr-only">Login</label>

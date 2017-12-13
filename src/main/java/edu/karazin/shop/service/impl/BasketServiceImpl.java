@@ -39,7 +39,7 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public OrderList getOrderByUserId(User user){
+    public OrderList getOrCreateOrderByUserId(User user){
         OrderList orderListByUserId = orderRepository.getOrderListByUserId(user.getId());
         if (Objects.equals(orderListByUserId, null)) orderListByUserId = createOrder(user);
         return orderListByUserId;
@@ -48,7 +48,7 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public OrderList addBookToOrder(User user, BookList book) {
 
-        OrderList orderList = getOrderByUserId(user);
+        OrderList orderList = getOrCreateOrderByUserId(user);
         if (orderList == null) orderList = createOrder(user);
 
         List<BookList> books = orderList.getBookLists();
@@ -84,7 +84,7 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public OrderList removeBookFromOrder(User user, Long id){
         BookList book = bookRepository.findOne(id);
-        OrderList order = getOrderByUserId(user);
+        OrderList order = getOrCreateOrderByUserId(user);
 
         List<BookList> books = order.getBookLists();
         if (books != null && books.contains(book)) {
@@ -105,7 +105,7 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public void removeOrder(User user){
-        orderRepository.delete(getOrderByUserId(user).getOrderId());
+        orderRepository.delete(getOrCreateOrderByUserId(user).getOrderId());
     }
 
     @Override

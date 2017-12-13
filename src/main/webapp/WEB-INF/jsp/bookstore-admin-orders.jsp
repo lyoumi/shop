@@ -84,8 +84,6 @@
             </ul>
             <p class=\"lead\"> </p>
             <p>Description: ${order.description}</p>
-            <p class=\"lead\"> </p>
-            <p>Description: ${order.description}</p>
         </div>
     </c:forEach>
 
